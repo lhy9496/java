@@ -1,0 +1,42 @@
+영화 목록 : HashMap
+고유 번호 : key
+영화 정보 : value, Movie 객체(제목, 장르, 연령제한, 남은 표, 예매 가능 여부)
+
+1. 영화 리스트 열람
+MovieList
+
+2. 영화 정보 검색
+searchMovie
+
+-제목으로 검색
+searchTitle
+
+-장르로 검색
+searchGenre
+
+-연령제한으로 검색
+searchAge
+
+-예매 가능 여부로 검색
+searchAvailable
+
+3. 영화 예매
+reserveTicket
+
+-연령대 확인
+checkAge
+
+-매진 여부 확인
+checkAvailable
+
+-예매 가능한 표 수 확인
+checkTicket
+
+4. 예매한 영화 확인
+reserveList
+
+5. 예매 취소
+cancelReserve
+
+-취소 확인
+checkcancel

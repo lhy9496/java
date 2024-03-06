@@ -1,0 +1,6 @@
+#Thu Feb 01 22:57:22 KST 2024
+5=melon,5000,2
+4=orange,800,10
+3=grape,4500,5
+2=banana,2500,2
+1=apple,1200,3

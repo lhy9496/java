@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="MovieList">
+		SELECT SERIAL, TITLE, GENRE_NAME, ACCESSAGE, TICKET
+		FROM MOVIE
+		JOIN GENRE ON (GENRE_CODE = GENRE_ID)
+	</entry>
+	
+	<entry key="ReserveList">
+		SELECT SERIAL, TITLE, GENRE_NAME, ACCESSAGE, TICKET
+		FROM RESERVED
+		JOIN GENRE ON (GENRE_CODE = GENRE_ID)
+	</entry>
+</properties>
