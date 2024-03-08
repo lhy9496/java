@@ -122,8 +122,8 @@ public class MovieMenu {
 	
 	public void reserveTicket() { //영화 예매
 		System.out.println("===== 영화 예매 =====");
-		mc.MovieList();
-		if(new MovieService().MovieList().isEmpty()) {
+		boolean mvlist = mc.MovieList();
+		if(mvlist == false) {
 			return;
 		}
 		System.out.print("예매하실 영화의 번호를 입력하세요. : ");
@@ -136,24 +136,26 @@ public class MovieMenu {
 		}
 		Movie r = mc.checkReserve(serial);
 		if (m.getTitle().equals(r.getTitle())) {
-			System.out.println("이미 예매하신 영화입니다.");
-			return;
+			System.out.println("===== 추가 예매 =====");
+			System.out.print("연령 검사 중...");
+			boolean ckage = mc.checkAge(m);
+			if(ckage == false) {
+				System.out.println(m.getAccessAge() + "세 미만 관람불가 영화입니다.");
+				return;
+			}
+			System.out.println();
+			
+		} else {
+			System.out.println("===== 신규 예매 =====");
 		}
 		
-		
-		System.out.println("연령 검사 중...");
-		boolean ckage = mc.checkAge(m);
-		if(ckage == false) {
-			System.out.println(m.getAccessAge() + "세 미만 관람불가 영화입니다.");
-			return;
-		}
-		
-		System.out.println("매진 확인 중...");
+		System.out.print("좌석 수 확인 중...");
 		boolean ckabl = mc.checkAvailable(m);
 		if (ckabl == false) {
 			System.out.println("이미 매진된 영화입니다.");
 			return;
 		}
+		System.out.println();
 		
 		System.out.print("예매하실 영화표의 수를 입력해주세요. : ");
 		int ticket = sc.nextInt();

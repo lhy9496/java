@@ -21,22 +21,28 @@ public class MovieController {
 		return mem;
 	}
 	
-	public void MovieList() { //영화 목록
-		HashMap<Integer, Movie> result = new MovieService().MovieList();
-		if (result.isEmpty()) {
+	public boolean MovieList() { //영화 목록
+		boolean result = true;
+		HashMap<Integer, Movie> map = new MovieService().MovieList();
+		if (map.isEmpty()) {
 			new MovieMenu().displayNoData("열람 가능한 영화가 없습니다.");
+			result = false;
 		} else {
-			new MovieMenu().displayMovieList(result);
+			new MovieMenu().displayMovieList(map);
 		}
+		return result;
 	}
 	
-	public void ReserveList() { //예매한 영화 목록
-		HashMap<Integer, Movie> result = new MovieService().ReserveList();
-		if (result.isEmpty()) {
+	public boolean ReserveList() { //예매한 영화 목록
+		boolean result = true;
+		HashMap<Integer, Movie> map = new MovieService().ReserveList();
+		if (map.isEmpty()) {
 			new MovieMenu().displayNoData("예매하신 영화가 없습니다.");
+			result = false;
 		} else {
-			new MovieMenu().displayMovieList(result);
+			new MovieMenu().displayMovieList(map);
 		}
+		return result;
 	}
 	
 	public void searchTitle(String title) { //영화 제목 검색결과
