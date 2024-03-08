@@ -65,7 +65,14 @@ public class MovieMenu {
 	
 	public void MovieList() { //영화 목록
 		System.out.println("====== 영화 목록 ======");
-		mc.MovieList();
+		HashMap<Integer, Movie> cinema = mc.MovieList();
+		if(cinema.isEmpty()) {
+			System.out.println("영화가 없습니다.");
+		} else {
+			cinema.forEach((Integer, Movie) -> {
+				System.out.println(Integer + "/ " + Movie.toString());
+			});
+		}
 	}
 	
 	public void searchMovie() { //영화 검색
@@ -142,7 +149,15 @@ public class MovieMenu {
 	
 	public void reserveTicket() { //영화 예매
 		System.out.println("===== 영화 예매 =====");
-		mc.MovieList();
+		HashMap<Integer, Movie> cinema = mc.MovieList();
+		if(cinema.isEmpty()) {
+			System.out.println("영화가 없습니다.");
+			return;
+		} else {
+			cinema.forEach((Integer, Movie) -> {
+				System.out.println(Integer + "/ " + Movie.toString());
+			});
+		}
 		System.out.print("예매하실 영화의 번호를 입력하세요. : ");
 		int serial = sc.nextInt();
 		sc.nextLine();
@@ -181,12 +196,27 @@ public class MovieMenu {
 	
 	public void reserveList() { //예매한 영화 목록
 		System.out.println("====== 예매한 영화 목록 ======");
-		mc.ReserveList();
+		HashMap<Integer, Movie> reserved = mc.ReserveList();
+		if(reserved.isEmpty()) {
+			System.out.println("예매하신 영화가 없습니다.");
+		} else {
+			reserved.forEach((Integer, Movie) -> {
+				System.out.println(Integer + "/ " + Movie.toString());
+			});
+		}
 	}
 	
 	public void reserveCancel() { //예매 취소
 		System.out.println("====== 예매 취소 ======");
-		mc.ReserveList();
+		HashMap<Integer, Movie> reserved = mc.ReserveList();
+		if(reserved.isEmpty()) {
+			System.out.println("예매하신 영화가 없습니다.");
+			return;
+		} else {
+			reserved.forEach((Integer, Movie) -> {
+				System.out.println(Integer + "/ " + Movie.toString());
+			});
+		}
 		System.out.print("예매를 취소하실 영화의 번호를 입력해주세요. : ");
 		int serial = sc.nextInt();
 		sc.nextLine();

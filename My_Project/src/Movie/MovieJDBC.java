@@ -15,20 +15,20 @@ public class MovieJDBC {
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String sql = "SELECT SERIAL, TITLE, GENRE_NAME, ACCESSAGE, TICKET FROM MOVIE JOIN GENRE ON (GENRE_CODE = GENRE_ID)";
+		String sql = "SELECT SERIAL, TITLE, GENRE, ACCESSAGE, TICKET FROM MOVIE";
 		
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "JDBC", "JDBC");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "PRMV", "PRMV");
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(sql);
 			
 			while(rset.next()) {
 				Movie m = new Movie();
 				m.setTitle(rset.getString("title"));
-				m.setGenre(rset.getString("genre_name"));
+				m.setGenre(rset.getString("genre"));
 				m.setAccessAge(rset.getInt("accessage"));
 				m.setTicket(rset.getInt("ticket"));
 				

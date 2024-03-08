@@ -1,10 +1,9 @@
 package Movie;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import com.kh.model.vo.Member;
+import Movie.Member;
+import Movie.jdbc.MovieService;
 
 public class MovieMenu {
 	Scanner sc = new Scanner(System.in);
@@ -100,7 +99,7 @@ public class MovieMenu {
 		System.out.println("===== 제목으로 검색 =====");
 		System.out.print("검색할 키워드를 입력하여 주세요. : ");
 		String sct = sc.nextLine();
-		HashMap<Integer, Movie> result = mc.searchTitle(sct);
+		mc.searchTitle(sct);
 		
 	}
 	
@@ -108,7 +107,7 @@ public class MovieMenu {
 		System.out.println("===== 장르로 검색 =====");
 		System.out.print("검색할 키워드를 입력하여 주세요. : ");
 		String scg = sc.nextLine();
-		HashMap<Integer, Movie> result = mc.searchGenre(scg);
+		mc.searchGenre(scg);
 		
 	}
 	
@@ -117,21 +116,30 @@ public class MovieMenu {
 		System.out.print("검색할 키워드를 입력하여 주세요. : ");
 		int sca = sc.nextInt();
 		sc.nextLine();
-		HashMap<Integer, Movie> result = mc.searchAge(sca);
+		mc.searchAge(sca);
 		
 	}
 	
 	public void reserveTicket() { //영화 예매
 		System.out.println("===== 영화 예매 =====");
 		mc.MovieList();
+		if(new MovieService().MovieList().isEmpty()) {
+			return;
+		}
 		System.out.print("예매하실 영화의 번호를 입력하세요. : ");
 		int serial = sc.nextInt();
 		sc.nextLine();
 		Movie m = mc.checkMovie(serial);
 		if (m == null) {
-			System.out.println("목록에 존재하지 않는 번호입니다.");
+			System.out.println("목록에 존재하지 않는 영화입니다.");
 			return;
 		}
+		Movie r = mc.checkReserve(serial);
+		if (m.getTitle().equals(r.getTitle())) {
+			System.out.println("이미 예매하신 영화입니다.");
+			return;
+		}
+		
 		
 		System.out.println("연령 검사 중...");
 		boolean ckage = mc.checkAge(m);
@@ -150,14 +158,7 @@ public class MovieMenu {
 		System.out.print("예매하실 영화표의 수를 입력해주세요. : ");
 		int ticket = sc.nextInt();
 		sc.nextLine();
-		boolean restck = mc.reserveTicket(serial, ticket);
-		if (restck == false) {
-			System.out.println("남은 영화표의 수가 부족합니다.");
-			return;
-		} else {
-			System.out.println("티켓이 예매되었습니다.");
-		}
-		
+		mc.reserveTicket(serial, m, ticket);
 	}
 	
 	public void reserveList() { //예매한 영화 목록
@@ -168,17 +169,14 @@ public class MovieMenu {
 	public void reserveCancel() { //예매 취소
 		System.out.println("====== 예매 취소 ======");
 		mc.ReserveList();
+		if(new MovieService().ReserveList().isEmpty()){
+			return;
+		}
 		System.out.print("예매를 취소하실 영화의 번호를 입력해주세요. : ");
 		int serial = sc.nextInt();
 		sc.nextLine();
 		
-		boolean rescan = mc.reserveCancel(serial);
-		if (rescan == false) {
-			System.out.println("예매 목록에 포함되어 있지 않은 영화입니다.");
-			return;
-		} else {
-			System.out.println("예매가 취소되었습니다.");
-		}
+		mc.reserveCancel(serial);
 	}
 	
 	// 응답화면
@@ -213,7 +211,7 @@ public class MovieMenu {
 	 */
 	public void displayMovieList(HashMap<Integer, Movie> map) {
 		map.forEach((Integer, Movie) -> {
-			System.out.println(Integer + "/ " + Movie.toString());
+			System.out.println(Integer + "/ " + Movie);
 		});
 	}
 }

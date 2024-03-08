@@ -22,24 +22,12 @@ public class MovieController {
 		return mem;
 	}
 	
-	public void MovieList() { //영화 목록
-		if(cinema.isEmpty()) {
-			System.out.println("영화가 없습니다.");
-		} else {
-			cinema.forEach((Integer, Movie) -> {
-				System.out.println(Integer + "/ " + Movie.toString());
-			});
-		}
+	public HashMap<Integer, Movie> MovieList() { //영화 목록
+		return cinema;
 	}
 	
-	public void ReserveList() { //예매한 영화 목록
-		if(reserved.isEmpty()) {
-			System.out.println("예매하신 영화가 없습니다.");
-		} else {
-			reserved.forEach((Integer, Movie) -> {
-				System.out.println(Integer + "/ " + Movie.toString());
-			});
-		}
+	public HashMap<Integer, Movie> ReserveList() { //예매한 영화 목록
+		return reserved;
 	}
 	
 	public HashMap<Integer, Movie> searchTitle(String title) { //영화 제목 검색결과

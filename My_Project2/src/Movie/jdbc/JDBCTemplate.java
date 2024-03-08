@@ -1,10 +1,14 @@
 package Movie.jdbc;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 //공통 템플릿(매번 반복적으로 작성될 코드를 메소드로 정의)
 public class JDBCTemplate {
@@ -15,18 +19,24 @@ public class JDBCTemplate {
 	public static Connection getConnection() {
 	
 		Connection conn = null;
+		Properties prop = new Properties();
 		
 		try {
+			prop.load(new FileInputStream("resources/driver.properties"));
 			//1)JDBC Driver 등록
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName(prop.getProperty("driver"));
 			
 			//2)Connection 객체 생성
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "JDBC", "JDBC");
+			conn = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
 			
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		

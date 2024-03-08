@@ -2,14 +2,64 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<entry key="MovieList">
-		SELECT SERIAL, TITLE, GENRE_NAME, ACCESSAGE, TICKET
+		SELECT *
 		FROM MOVIE
-		JOIN GENRE ON (GENRE_CODE = GENRE_ID)
 	</entry>
 	
 	<entry key="ReserveList">
-		SELECT SERIAL, TITLE, GENRE_NAME, ACCESSAGE, TICKET
+		SELECT *
 		FROM RESERVED
-		JOIN GENRE ON (GENRE_CODE = GENRE_ID)
+	</entry>
+	
+	<entry key="searchTitle">
+		SELECT *
+		FROM MOVIE
+		WHERE TITLE LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="searchGenre">
+		SELECT *
+		FROM MOVIE
+		WHERE GENRE LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="searchAge">
+		SELECT *
+		FROM MOVIE
+		WHERE ACCESSAGE <![CDATA[<=]]> ?
+	</entry>
+	
+	<entry key="checkMovie">
+		SELECT *
+		FROM MOVIE
+		WHERE SERIAL = ?
+	</entry>
+	
+	<entry key="checkReserve">
+		SELECT *
+		FROM RESERVED
+		WHERE SERIAL = ?
+	</entry>
+	
+	<entry key="reserveTicket1">
+		UPDATE MOVIE
+		SET TICKET = ?
+		WHERE SERIAL = ?
+	</entry>
+	
+	<entry key="reserveTicket2">
+		INSERT INTO RESERVED
+		VALUES(?, ?, ?, ?, ?)
+	</entry>
+	
+	<entry key="reserveCancel1">
+		DELETE FROM RESERVED
+		WHERE SERIAL = ?
+	</entry>
+	
+	<entry key="reserveCancel2">
+		UPDATE MOVIE
+		SET TICKET = ?
+		WHERE SERIAL = ?
 	</entry>
 </properties>
